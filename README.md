@@ -15,7 +15,7 @@ Start Filebeat as follows:
 ```$ docker run -ti 
 -v /var/run/docker.sock:/tmp/docker.sock 
 -e LOGSTASH_HOST=monitoring.xyz -e LOGSTASH_PORT=5044 -e SHIPPER_NAME=$(hostname) 
-filebeat```
+bargenson/filebeat```
 
 Three environment variables are needed:
 * `LOGSTASH_HOST`: to specify on which server runs your Logstash
