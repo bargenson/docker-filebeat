@@ -63,7 +63,7 @@ filebeat:
       # Type to be published in the 'type' field. For Elasticsearch output,
       # the type defines the document type these entries should be stored
       # in. Default: log
-      #document_type: log
+      document_type: filebeat-docker-logs
 
       # Scan frequency in seconds.
       # How often these files should be checked for changes. In case it is set
