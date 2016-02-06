@@ -21,6 +21,14 @@ for container in containers:
 "
   }
 
+  getContainerName() {
+    curl --no-buffer -s -XGET --unix-socket /tmp/docker.sock http:/containers/$1/json | python -c "
+import json, sys
+container=json.loads(sys.stdin.readline())
+print(container['Name'])
+" | sed 's;/;;'
+  }
+
   createContainerFile() {
     touch "$CONTAINERS_FOLDER/$1"
   }
@@ -35,7 +43,8 @@ for container in containers:
     echo "Processing $CONTAINER..."
     createContainerFile $CONTAINER
     echo "Connected to $CONTAINER."
-    curl -s --no-buffer -XGET --unix-socket /tmp/docker.sock "http:/containers/$CONTAINER/logs?stderr=1&stdout=1&tail=1&follow=1" > $NAMED_PIPE
+    CONTAINER_NAME=`getContainerName $CONTAINER`
+    curl -s --no-buffer -XGET --unix-socket /tmp/docker.sock "http:/containers/$CONTAINER/logs?stderr=1&stdout=1&tail=1&follow=1" | sed "s;^;[$CONTAINER_NAME] ;" > $NAMED_PIPE
     echo "Disconnected from $CONTAINER."
     removeContainerFile $CONTAINER
   }
