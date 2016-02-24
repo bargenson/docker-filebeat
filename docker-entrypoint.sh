@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 if [ "$1" = 'start' ]; then
@@ -9,7 +9,7 @@ if [ "$1" = 'start' ]; then
   setConfiguration() {
     KEY=$1
     VALUE=$2
-    sed -i "s/{{$KEY}}/$VALUE/g" /filebeat/filebeat.yml
+    sed -i "s/{{$KEY}}/$VALUE/g" ${FILEBEAT_HOME}/filebeat.yml
   }
 
   getRunningContainers() {
@@ -73,7 +73,7 @@ print(container['Name'])
   mkfifo -m a=rw "$NAMED_PIPE"
 
   echo "Initializing Filebeat..."
-  cat $NAMED_PIPE | /filebeat/filebeat -e -v &
+  cat $NAMED_PIPE | ${FILEBEAT_HOME}/filebeat -e -v &
 
   while true; do
     CONTAINERS=`getRunningContainers`

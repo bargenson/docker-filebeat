@@ -1,0 +1,9 @@
+filebeat:
+  image: moss/filebeat:test
+  restart: unless-stopped
+  volumes:
+   - /var/run/docker.sock:/tmp/docker.sock
+  environment:
+   - LOGSTASH_HOST=logstash.localdomain
+   - LOGSTASH_PORT=5044
+   - SHIPPER_NAME=aWonderfulName
