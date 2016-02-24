@@ -1,5 +1,5 @@
 filebeat:
-  image: moss/filebeat:test
+  image: bargenson/filebeat:latest
   restart: unless-stopped
   volumes:
    - /var/run/docker.sock:/tmp/docker.sock
